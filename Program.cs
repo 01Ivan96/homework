@@ -1,63 +1,88 @@
-﻿// Задача №19
+﻿// Задача №25
 // /*
-Console.Write("Введите пятизначное число по модулю: ");
-int number = Convert.ToInt32(Console.ReadLine());
-int absNumber = Math.Abs(number);
+Console.Write("Первое число: ");
+int firstNumber = Convert.ToInt32(Console.ReadLine());
+Console.Write("Введите натуральное число: ");
+int secondNumber = Convert.ToInt32(Console.ReadLine());
 
-while ( absNumber < 10000 || absNumber > 99999 ) {
-    Console.Write("Введите пятизначное число по модулю: ");
-    number = Convert.ToInt32(Console.ReadLine());
-    absNumber = Math.Abs(number);
+while ( secondNumber < 1) {
+    Console.Write("Введите натуральное число: ");
+    secondNumber = Convert.ToInt32(Console.ReadLine());
 }
 
-int secondNumber = 0;
-int remainderDivision;
-while ( absNumber > 0 ) {
-    remainderDivision = absNumber % 10;
-    absNumber /= 10;
-    secondNumber = secondNumber*10 + remainderDivision;
+double exponentiation = 1;
+for ( int i=1; i<=secondNumber; i++ ) {
+    exponentiation *= firstNumber;
 }
 
-if ( Math.Abs(number) == secondNumber ) {
-    Console.Write($"Число {number} палиндром!");
-} else {
-    Console.Write($"Число {number} не палиндром.");
-}
+Console.Write($"Число {firstNumber} в степени {secondNumber} равно {exponentiation}");
 // */
 
 
-// Задача №21
+
+// Задача №27
 /*
-Console.Write("Первая точка по Ox: ");
-int firstX = Convert.ToInt32(Console.ReadLine());
-Console.Write("Первая точка по Oy: ");
-int firstY = Convert.ToInt32(Console.ReadLine());
-Console.Write("Первая точка по Oz: ");
-int firstZ = Convert.ToInt32(Console.ReadLine());
-Console.Write("Вторая точка по Ox: ");
-int secondX = Convert.ToInt32(Console.ReadLine());
-Console.Write("Вторая точка по Oy: ");
-int secondY = Convert.ToInt32(Console.ReadLine());
-Console.Write("Вторая точка по Oz: ");
-int secondZ = Convert.ToInt32(Console.ReadLine());
+Console.Write("Введите число: ");
+int number = Convert.ToInt32(Console.ReadLine());
+int absNumber = Math.Abs(number);
 
-double length = Math.Sqrt( Math.Pow((secondX - firstX), 2) + Math.Pow((secondY - firstY), 2) + Math.Pow((secondZ - firstZ), 2) );
+int sumDigits = 0;
+while ( absNumber > 0 ) {
+    sumDigits += absNumber % 10;
+    absNumber /= 10;
+}
 
-Console.Write($"Длина между точкой ({firstX}; {firstY}; {firstZ}) и точкой ({secondX}; {secondY}; {secondZ}) равна {length}");
+Console.Write($"Сумма цифр числа {number} равна {sumDigits}.");
 */
 
 
-// Задача №23
+
+// Задача №29
 /*
-Console.Write("Введите число больше нуля: ");
-int number = Convert.ToInt32(Console.ReadLine());
-
-while ( number<1 ) {
-    Console.Write("Введите число больше нуля: ");
-    number = Convert.ToInt32(Console.ReadLine());
+int[] array = new int[8];
+for ( int i=0; i<array.Length; i++ ) {
+    Console.Write($"Введите число №{i+1}: ");
+    array[i] = Convert.ToInt32(Console.ReadLine());
 }
 
-for ( int i=1; i<=number; i++ ) {
-    Console.Write( Math.Pow(i, 3) + " " );
+Console.Write($"[{string.Join(", ", array)}]");
+*/
+
+
+
+// Задача - "Черника"
+/*
+Console.Write("Введите количество кустов (от 3 до 1000): ");
+int numberBushes = Convert.ToInt32(Console.ReadLine());
+
+int[] bushes = new int[numberBushes];
+for ( int i=0; i<numberBushes; i++ ) {
+    bushes[i] = new Random().Next(3, 1001);
 }
+Console.WriteLine(string.Join(", ", bushes));
+
+int maxNumberBerries = 0;
+int indexBushes = 0;
+
+for ( int n=1; n<numberBushes-1; n++ ) {
+    int numberBerries = bushes[n-1] + bushes[n] + bushes[n+1];
+    if ( numberBerries > maxNumberBerries ) {
+        maxNumberBerries = numberBerries;
+        indexBushes = n+1;
+    }
+}
+
+int numberBerriesFirstIndex = bushes[numberBushes-1] + bushes[0] + bushes[1];
+int numberBerriesLastIndex = bushes[numberBushes-2] + bushes[numberBushes-1] + bushes[0];
+
+if ( numberBerriesFirstIndex > maxNumberBerries ) {
+    maxNumberBerries = numberBerriesFirstIndex;
+    indexBushes = 1;
+}
+if ( numberBerriesLastIndex > maxNumberBerries ) {
+    maxNumberBerries = numberBerriesLastIndex;
+    indexBushes = numberBushes;
+}
+
+Console.Write($"Перед кустом №{indexBushes} модуль соберёт больше всего ягод, а именно {maxNumberBerries}!");
 */
