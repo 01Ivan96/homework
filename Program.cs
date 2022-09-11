@@ -55,6 +55,11 @@ Console.Write($"[{string.Join(", ", array)}]");
 Console.Write("Введите количество кустов (от 3 до 1000): ");
 int numberBushes = Convert.ToInt32(Console.ReadLine());
 
+while ( numberBushes<3 || numberBushes>1000 ) {
+    Console.Write("Введите количество кустов (от 3 до 1000): ");
+    numberBushes = Convert.ToInt32(Console.ReadLine());
+}
+
 int[] bushes = new int[numberBushes];
 for ( int i=0; i<numberBushes; i++ ) {
     bushes[i] = new Random().Next(3, 1001);
