@@ -1,93 +1,174 @@
-﻿// Задача №25
+﻿int[] InputArray ( int smallestNumber, int largestNumber ) {
+    Console.Write("Количество элементов в массиве: ");
+    int amountElements = Convert.ToInt32(Console.ReadLine());
+
+    while ( amountElements < 1 ) {
+        Console.Write("Количество элементов должно быть больше нуля: ");
+        amountElements = Convert.ToInt32(Console.ReadLine());
+    }
+
+    int[] array = new int[amountElements];
+
+    for ( int i=0; i<amountElements; i++ ) {
+        array[i] = new Random().Next(smallestNumber, largestNumber+1);
+    }
+
+    return array;
+}
+
+
+// Задача №34
 // /*
-Console.Write("Первое число: ");
-int firstNumber = Convert.ToInt32(Console.ReadLine());
-Console.Write("Введите натуральное число: ");
-int secondNumber = Convert.ToInt32(Console.ReadLine());
+int smallestNumber = 100;
+int largestNumber = 999;
 
-while ( secondNumber < 1) {
-    Console.Write("Введите натуральное число: ");
-    secondNumber = Convert.ToInt32(Console.ReadLine());
+int[] array = InputArray ( smallestNumber, largestNumber );
+Console.WriteLine($"[{string.Join(", ", array)}]");
+
+int amountEven = 0;
+for ( int i=0; i<array.Length; i++ ) {
+    if ( array[i] % 2 == 0 ) {
+        amountEven++;
+    }
 }
-
-double exponentiation = 1;
-for ( int i=1; i<=secondNumber; i++ ) {
-    exponentiation *= firstNumber;
-}
-
-Console.Write($"Число {firstNumber} в степени {secondNumber} равно {exponentiation}");
+Console.WriteLine($"Количество чётных чисел в массиве: {amountEven}");
 // */
 
 
 
-// Задача №27
+// Задача №36
 /*
-Console.Write("Введите число: ");
-int number = Convert.ToInt32(Console.ReadLine());
-int absNumber = Math.Abs(number);
+Console.Write("Самое маленькое возможное число в массиве: ");
+int smallestNumber = Convert.ToInt32(Console.ReadLine());
+Console.Write("Самое большое возможное число в массиве: ");
+int largestNumber = Convert.ToInt32(Console.ReadLine());
 
-int sumDigits = 0;
-while ( absNumber > 0 ) {
-    sumDigits += absNumber % 10;
-    absNumber /= 10;
+while ( smallestNumber >= largestNumber ) {
+    Console.WriteLine("Первое вводное число должно быть меньше второго!");
+    Console.Write("Самое маленькое возможное число в массиве: ");
+    smallestNumber = Convert.ToInt32(Console.ReadLine());
+    Console.Write("Самое большое возможное число в массиве: ");
+    largestNumber = Convert.ToInt32(Console.ReadLine());
 }
 
-Console.Write($"Сумма цифр числа {number} равна {sumDigits}.");
+int[] array = InputArray ( smallestNumber, largestNumber );
+Console.WriteLine($"[{string.Join(", ", array)}]");
+
+int sumNumbersOnOddIndex = 0;
+for ( int i=1; i<array.Length; i += 2 ) {
+    sumNumbersOnOddIndex += array[i];
+}
+Console.WriteLine($"Сумма чисел расположенных в массиве на нечётном индексе равна: {sumNumbersOnOddIndex}");
 */
 
 
 
-// Задача №29
+// Задача №38
 /*
-int[] array = new int[8];
+Console.Write("Количество элементов в массиве: ");
+int amountElements = Convert.ToInt32(Console.ReadLine());
+
+while ( amountElements < 1 ) {
+    Console.Write("Количество элементов должно быть больше нуля: ");
+    amountElements = Convert.ToInt32(Console.ReadLine());
+}
+
+Console.Write("Самое маленькое возможное число в массиве: ");
+double smallestNumber = Convert.ToDouble(Console.ReadLine());
+Console.Write("Самое большое возможное число в массиве: ");
+double largestNumber = Convert.ToDouble(Console.ReadLine());
+
+while ( smallestNumber >= largestNumber ) {
+    Console.WriteLine("Первое вводное число должно быть меньше второго!");
+    Console.Write("Самое маленькое возможное число в массиве: ");
+    smallestNumber = Convert.ToDouble(Console.ReadLine());
+    Console.Write("Самое большое возможное число в массиве: ");
+    largestNumber = Convert.ToDouble(Console.ReadLine());
+}
+
+double[] array = new double[amountElements];
 for ( int i=0; i<array.Length; i++ ) {
-    Console.Write($"Введите число №{i+1}: ");
-    array[i] = Convert.ToInt32(Console.ReadLine());
+    array[i] = new Random().NextDouble() * (largestNumber - smallestNumber) + smallestNumber;
 }
+Console.WriteLine(string.Join(", ", array));
 
-Console.Write($"[{string.Join(", ", array)}]");
+double minElement = array[0];
+double maxElement = array[0];
+for ( int k=1; k<array.Length; k++ ) {
+    if ( array[k] < minElement ) {
+        minElement = array[k];
+    }
+    if ( array[k] > maxElement ) {
+        maxElement = array[k];
+    }
+}
+Console.WriteLine($"Разница между max и min элементом массива равна: {maxElement - minElement}");
 */
 
 
 
-// Задача - "Черника"
+// Задача - "Двойной переворот"
 /*
-Console.Write("Введите количество кустов (от 3 до 1000): ");
-int numberBushes = Convert.ToInt32(Console.ReadLine());
-
-while ( numberBushes<3 || numberBushes>1000 ) {
-    Console.Write("Введите количество кустов (от 3 до 1000): ");
-    numberBushes = Convert.ToInt32(Console.ReadLine());
-}
-
-int[] bushes = new int[numberBushes];
-for ( int i=0; i<numberBushes; i++ ) {
-    bushes[i] = new Random().Next(3, 1001);
-}
-Console.WriteLine(string.Join(", ", bushes));
-
-int maxNumberBerries = 0;
-int indexBushes = 0;
-
-for ( int n=1; n<numberBushes-1; n++ ) {
-    int numberBerries = bushes[n-1] + bushes[n] + bushes[n+1];
-    if ( numberBerries > maxNumberBerries ) {
-        maxNumberBerries = numberBerries;
-        indexBushes = n+1;
+void ReverseArray(int[] array, int[] arrayIndex) {
+    for ( int i=0; i<arrayIndex.Length/2; i++ ) {
+        int start = arrayIndex[2*i];
+        int end = arrayIndex[2*i+1];
+        while ( end-start > 0 ) {
+            int storage = array[start];
+            array[start] = array[end];
+            array[end] = storage;
+            start++;
+            end--;
+        }
+        Console.WriteLine($"{i+1} переворот: [{string.Join(", ", array)}]");
     }
 }
 
-int numberBerriesFirstIndex = bushes[numberBushes-1] + bushes[0] + bushes[1];
-int numberBerriesLastIndex = bushes[numberBushes-2] + bushes[numberBushes-1] + bushes[0];
+Console.Write("Количество элементов в массиве (не больше 1000): ");
+int amountElements = Convert.ToInt32(Console.ReadLine());
 
-if ( numberBerriesFirstIndex > maxNumberBerries ) {
-    maxNumberBerries = numberBerriesFirstIndex;
-    indexBushes = 1;
-}
-if ( numberBerriesLastIndex > maxNumberBerries ) {
-    maxNumberBerries = numberBerriesLastIndex;
-    indexBushes = numberBushes;
+while ( amountElements < 1 || amountElements > 1000 ) {
+    Console.Write("Количество элементов в массиве должно быть больше нуля и не больше 1000: ");
+    amountElements = Convert.ToInt32(Console.ReadLine());
 }
 
-Console.Write($"Перед кустом №{indexBushes} модуль соберёт больше всего ягод, а именно {maxNumberBerries}!");
+int[] array = new int[amountElements];
+for ( int i=0; i<amountElements; i++ ) {
+    array[i] = i + 1;
+}
+Console.WriteLine($"[{string.Join(", ", array)}]");
+
+Console.Write("Количество переворотов интервалов массива: ");
+int amountCoups = Convert.ToInt32(Console.ReadLine());
+
+while ( amountCoups < 1 ) {
+    Console.Write("Количество переворотов интервалов массива должно быть больше нуля: ");
+    amountCoups = Convert.ToInt32(Console.ReadLine());
+}
+
+int[] arrayIndex = new int[2*amountCoups];
+for ( int n=0; n<amountCoups; n++ ) {
+    Console.Write("Стартовый индекс: ");
+    int indexA = Convert.ToInt32(Console.ReadLine());
+    while ( indexA >= amountElements || indexA<0 ) {
+        Console.WriteLine($"Стартовый индекс не должен быть меньше нуля и больше последнего индекса массива - \"{amountElements-1}\"!");
+        Console.Write("Стартовый индекс: ");
+        indexA = Convert.ToInt32(Console.ReadLine());
+    }
+
+    Console.Write("Крайний индекс: ");
+    int indexB = Convert.ToInt32(Console.ReadLine());
+
+    while ( indexB >= amountElements || indexA > indexB ) {
+        Console.WriteLine($"Крайний индекс не должен быть меньше стартового \"{indexA}\" и больше последнего индекса массива - \"{amountElements-1}\"!");
+        Console.Write("Крайний индекс: ");
+        indexB = Convert.ToInt32(Console.ReadLine());
+    }
+
+    arrayIndex[2*n] = indexA;
+    arrayIndex[2*n+1] = indexB;
+}
+Console.WriteLine($"[{string.Join(", ", arrayIndex)}]");
+
+ReverseArray(array, arrayIndex);
 */
