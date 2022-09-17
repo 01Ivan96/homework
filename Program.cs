@@ -1,174 +1,80 @@
-﻿int[] InputArray ( int smallestNumber, int largestNumber ) {
-    Console.Write("Количество элементов в массиве: ");
-    int amountElements = Convert.ToInt32(Console.ReadLine());
-
-    while ( amountElements < 1 ) {
-        Console.Write("Количество элементов должно быть больше нуля: ");
-        amountElements = Convert.ToInt32(Console.ReadLine());
-    }
-
-    int[] array = new int[amountElements];
-
-    for ( int i=0; i<amountElements; i++ ) {
-        array[i] = new Random().Next(smallestNumber, largestNumber+1);
-    }
-
-    return array;
-}
-
-
-// Задача №34
+﻿// Задача №41
 // /*
-int smallestNumber = 100;
-int largestNumber = 999;
+Console.Write("Количество вводимых чисел: ");
+int number = Convert.ToInt32(Console.ReadLine());
 
-int[] array = InputArray ( smallestNumber, largestNumber );
-Console.WriteLine($"[{string.Join(", ", array)}]");
-
-int amountEven = 0;
-for ( int i=0; i<array.Length; i++ ) {
-    if ( array[i] % 2 == 0 ) {
-        amountEven++;
-    }
+while ( number<=0 ) {
+    Console.Write("Количество вводимых чисел должно быть больше нуля: ");
+    number = Convert.ToInt32(Console.ReadLine());
 }
-Console.WriteLine($"Количество чётных чисел в массиве: {amountEven}");
+
+int count = 0;
+string allNumber = string.Empty;
+for ( int i=0; i<number; i++ ) {
+    Console.Write("Введите число: ");
+    int inputNumber = Convert.ToInt32(Console.ReadLine());
+    if ( inputNumber > 0 ) {
+        count++;
+    }
+    allNumber += inputNumber + " ";
+}
+Console.WriteLine($"Количество положительных чисел из ряда ( {allNumber}) равно: {count}");
 // */
 
 
 
-// Задача №36
+// Задача №43
 /*
-Console.Write("Самое маленькое возможное число в массиве: ");
-int smallestNumber = Convert.ToInt32(Console.ReadLine());
-Console.Write("Самое большое возможное число в массиве: ");
-int largestNumber = Convert.ToInt32(Console.ReadLine());
+Console.Write("Первый угловой коэффициент: k1=");
+double k1 = Convert.ToDouble(Console.ReadLine());
+Console.Write("Первый коэффициент смещения по Oy: b1=");
+double b1 = Convert.ToDouble(Console.ReadLine());
+Console.Write("Второй угловой коэффициент: k2=");
+double k2 = Convert.ToDouble(Console.ReadLine());
+Console.Write("Второй коэффициент смещения по Oy: b2=");
+double b2 = Convert.ToDouble(Console.ReadLine());
 
-while ( smallestNumber >= largestNumber ) {
-    Console.WriteLine("Первое вводное число должно быть меньше второго!");
-    Console.Write("Самое маленькое возможное число в массиве: ");
-    smallestNumber = Convert.ToInt32(Console.ReadLine());
-    Console.Write("Самое большое возможное число в массиве: ");
-    largestNumber = Convert.ToInt32(Console.ReadLine());
-}
+double x = ( b2-b1 ) / ( k1-k2 );
+double y = k1 * x + b1;
 
-int[] array = InputArray ( smallestNumber, largestNumber );
-Console.WriteLine($"[{string.Join(", ", array)}]");
-
-int sumNumbersOnOddIndex = 0;
-for ( int i=1; i<array.Length; i += 2 ) {
-    sumNumbersOnOddIndex += array[i];
-}
-Console.WriteLine($"Сумма чисел расположенных в массиве на нечётном индексе равна: {sumNumbersOnOddIndex}");
+Console.WriteLine($"Для функций y={k1}*x+{b1} и y={k2}*x+{b2} точкой пересечения будет ({x}, {y})");
 */
 
 
 
-// Задача №38
+// Транспонирование
 /*
-Console.Write("Количество элементов в массиве: ");
-int amountElements = Convert.ToInt32(Console.ReadLine());
+Console.Write("Количество строк и столбцов в массиве: ");
+int number = Convert.ToInt32(Console.ReadLine());
 
-while ( amountElements < 1 ) {
-    Console.Write("Количество элементов должно быть больше нуля: ");
-    amountElements = Convert.ToInt32(Console.ReadLine());
+while ( number < 1 ) {
+    Console.Write("Количество строк и столбцов должно быть больше нуля: ");
+    number = Convert.ToInt32(Console.ReadLine());
 }
 
-Console.Write("Самое маленькое возможное число в массиве: ");
-double smallestNumber = Convert.ToDouble(Console.ReadLine());
-Console.Write("Самое большое возможное число в массиве: ");
-double largestNumber = Convert.ToDouble(Console.ReadLine());
+Console.WriteLine("");
+Console.WriteLine("Первый массив");
+Console.WriteLine("");
 
-while ( smallestNumber >= largestNumber ) {
-    Console.WriteLine("Первое вводное число должно быть меньше второго!");
-    Console.Write("Самое маленькое возможное число в массиве: ");
-    smallestNumber = Convert.ToDouble(Console.ReadLine());
-    Console.Write("Самое большое возможное число в массиве: ");
-    largestNumber = Convert.ToDouble(Console.ReadLine());
-}
-
-double[] array = new double[amountElements];
-for ( int i=0; i<array.Length; i++ ) {
-    array[i] = new Random().NextDouble() * (largestNumber - smallestNumber) + smallestNumber;
-}
-Console.WriteLine(string.Join(", ", array));
-
-double minElement = array[0];
-double maxElement = array[0];
-for ( int k=1; k<array.Length; k++ ) {
-    if ( array[k] < minElement ) {
-        minElement = array[k];
+int[,] array = new int[number, number];
+for ( int i=0; i<array.GetLength(0); i++ ) {
+    for ( int k=0; k<array.GetLength(1); k++ ) {
+        array[i, k] = new Random().Next(-100, 101);
+        Console.Write($"{array[i, k]}       ");
     }
-    if ( array[k] > maxElement ) {
-        maxElement = array[k];
+    Console.WriteLine("");
+}
+
+Console.WriteLine("");
+Console.WriteLine("Второй массив");
+Console.WriteLine("");
+
+int[,] newArray = new int[array.GetLength(0), array.GetLength(1)];
+for ( int m=0; m<newArray.GetLength(0); m++ ) {
+    for ( int n=0; n<newArray.GetLength(1); n++ ) {
+        newArray[m, n] = array[array.GetLength(1)-1-n, array.GetLength(0)-1-m];
+        Console.Write($"{newArray[m, n]}        ");
     }
+    Console.WriteLine("");
 }
-Console.WriteLine($"Разница между max и min элементом массива равна: {maxElement - minElement}");
-*/
-
-
-
-// Задача - "Двойной переворот"
-/*
-void ReverseArray(int[] array, int[] arrayIndex) {
-    for ( int i=0; i<arrayIndex.Length/2; i++ ) {
-        int start = arrayIndex[2*i];
-        int end = arrayIndex[2*i+1];
-        while ( end-start > 0 ) {
-            int storage = array[start];
-            array[start] = array[end];
-            array[end] = storage;
-            start++;
-            end--;
-        }
-        Console.WriteLine($"{i+1} переворот: [{string.Join(", ", array)}]");
-    }
-}
-
-Console.Write("Количество элементов в массиве (не больше 1000): ");
-int amountElements = Convert.ToInt32(Console.ReadLine());
-
-while ( amountElements < 1 || amountElements > 1000 ) {
-    Console.Write("Количество элементов в массиве должно быть больше нуля и не больше 1000: ");
-    amountElements = Convert.ToInt32(Console.ReadLine());
-}
-
-int[] array = new int[amountElements];
-for ( int i=0; i<amountElements; i++ ) {
-    array[i] = i + 1;
-}
-Console.WriteLine($"[{string.Join(", ", array)}]");
-
-Console.Write("Количество переворотов интервалов массива: ");
-int amountCoups = Convert.ToInt32(Console.ReadLine());
-
-while ( amountCoups < 1 ) {
-    Console.Write("Количество переворотов интервалов массива должно быть больше нуля: ");
-    amountCoups = Convert.ToInt32(Console.ReadLine());
-}
-
-int[] arrayIndex = new int[2*amountCoups];
-for ( int n=0; n<amountCoups; n++ ) {
-    Console.Write("Стартовый индекс: ");
-    int indexA = Convert.ToInt32(Console.ReadLine());
-    while ( indexA >= amountElements || indexA<0 ) {
-        Console.WriteLine($"Стартовый индекс не должен быть меньше нуля и больше последнего индекса массива - \"{amountElements-1}\"!");
-        Console.Write("Стартовый индекс: ");
-        indexA = Convert.ToInt32(Console.ReadLine());
-    }
-
-    Console.Write("Крайний индекс: ");
-    int indexB = Convert.ToInt32(Console.ReadLine());
-
-    while ( indexB >= amountElements || indexA > indexB ) {
-        Console.WriteLine($"Крайний индекс не должен быть меньше стартового \"{indexA}\" и больше последнего индекса массива - \"{amountElements-1}\"!");
-        Console.Write("Крайний индекс: ");
-        indexB = Convert.ToInt32(Console.ReadLine());
-    }
-
-    arrayIndex[2*n] = indexA;
-    arrayIndex[2*n+1] = indexB;
-}
-Console.WriteLine($"[{string.Join(", ", arrayIndex)}]");
-
-ReverseArray(array, arrayIndex);
 */
