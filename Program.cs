@@ -274,7 +274,12 @@ for ( int i=0; i<=number; i++ ) {
 
 // Задача №62
 /*
-int[,] matrix = new int[8, 6];
+Console.Write("Введите количество строк массива: ");
+int numberRows = Convert.ToInt32(Console.ReadLine());
+Console.Write("Введите количество столбцов массива: ");
+int numberColumns = Convert.ToInt32(Console.ReadLine());
+
+int[,] matrix = new int[numberRows, numberColumns];
 
 int i = 0;
 int j = 0;
